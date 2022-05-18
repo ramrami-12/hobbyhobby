@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
+		16256F30F834D374EAA3C121 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D99D131ED7DB3B3852656290 /* Pods_Runner.framework */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		88B3BF80E201A2A698753A94 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF4DF5C28D0A85800125930 /* Pods_Runner.framework */; };
@@ -125,6 +126,17 @@
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 			);
 			path = Runner;
+			sourceTree = "<group>";
+		};
+		D8F80280270B799F0E71E732 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2559EDDF8E327F2A279FFF26 /* Pods-Runner.debug.xcconfig */,
+				3631019DEFFB9B1AB1D167A8 /* Pods-Runner.release.xcconfig */,
+				D671D420AA4ABF867C53F6D7 /* Pods-Runner.profile.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
