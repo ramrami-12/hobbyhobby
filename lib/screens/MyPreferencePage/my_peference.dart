@@ -1,13 +1,18 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-class myPreferPage extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:hobbyhobby/models/preference.dart';
+
+Preference prefer = Preference(); 
+class MyPreferPage extends StatefulWidget {
+  const MyPreferPage({ Key? key }) : super(key: key);
+
   @override
-  myPreferPageState createState() => myPreferPageState();
+  State<MyPreferPage> createState() => _MyPreferPageState();
 }
 
-class myPreferPageState extends State<myPreferPage> {
-
-  List<bool> _selections1 = List.generate(2, (index) => false);
+class _MyPreferPageState extends State<MyPreferPage> {
+  final List<bool> _selections1 = List.generate(2, (index) => false);
   final _timeItems = ['1만원 이하', '1~3만원', '3~5만원', '5만원 이상'];
   var _timeSelected = '1만원 이하';
 
@@ -25,10 +30,7 @@ class myPreferPageState extends State<myPreferPage> {
       ),
       body: Center(
         child: Column(
-
-
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: <Widget>[
             Row(
               children: <Widget> [
