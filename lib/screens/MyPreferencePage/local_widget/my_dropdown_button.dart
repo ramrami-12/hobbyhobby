@@ -6,13 +6,14 @@ import 'package:hobbyhobby/models/firebase.dart';
 class MyDropDownButton extends StatefulWidget {
   final String title;
   dynamic selectValue;
-  final List<String>selectList;
+  final List<String> selectList;
 
   MyDropDownButton(
       {Key? key,
       required this.title,
       required this.selectValue,
-      required this.selectList, required Null Function(dynamic newValue) onChanged})
+      required this.selectList,
+      required Null Function(dynamic newValue) onChanged})
       : super(key: key);
 
   @override
