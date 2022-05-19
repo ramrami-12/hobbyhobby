@@ -24,11 +24,10 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
-              onPressed: (){
+              onPressed: () {
                 Get.to(MyPreferPage());
               },
-              child:
-              Text(
+              child: Text(
                 '페이지 이동',
                 style: TextStyle(
                   fontFamily: 'NanumSquareRoundR',
