@@ -7,6 +7,7 @@ class MyToggleButton extends StatelessWidget {
   final item1;
   final item2;
   final selections;
+  final pressEvent;
 
   const MyToggleButton({
     Key? key,
@@ -14,6 +15,7 @@ class MyToggleButton extends StatelessWidget {
     required this.item1,
     required this.item2,
     required this.selections,
+    required this.pressEvent,
   }) : super(key: key);
 
   @override
@@ -33,11 +35,11 @@ class MyToggleButton extends StatelessWidget {
         width: 20,
       ),
       ToggleButtons(
-        color: Colors.greenAccent,
         children: <Widget>[
           Text(this.item1),
           Text(this.item2),
         ],
+        onPressed: this.pressEvent,
         isSelected: this.selections,
       ),
       SizedBox(height: 80),
