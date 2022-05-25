@@ -148,17 +148,6 @@ class _postlistPageState extends State<postlistPage> {
                       ),
                     ],
                   );
-
-                  //               // image: "aaa",
-                  //               // category: snapshot.data.docs[index]['name'],
-                  //               // numOfBrands: snapshot.data.docs[index]
-                  //               //     ['maxcost'],
-                  //               // press: () {},
-
-                  //               // This trailing comma makes auto-f
-                  //             ],
-                  //           )),
-                  //     ));
                 }),
           ),
           Expanded(
