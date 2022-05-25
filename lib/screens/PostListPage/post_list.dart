@@ -13,7 +13,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:hobbyhobby/models/firebase.dart';
 import '../PostAddPage/post_add.dart';
-import 'firebase_options.dart'; // new
+import 'firebase_options.dart';
 import 'package:path/path.dart';
 import 'package:hobbyhobby/main.dart';
 
@@ -66,6 +66,7 @@ class _postlistPageState extends State<postlistPage> {
                           .snapshots()
                           .listen((data) {
                     print(data.docs);
+                    print("hello");
                     data.docs.forEach((element) {
                       // print(element['com_name']);
                       com_id = data.docs[0].id;
@@ -152,6 +153,31 @@ class _postlistPageState extends State<postlistPage> {
                       ),
                     ],
                   );
+
+                  // return SizedBox(
+                  //     height: 30,
+                  //     child: ListView.builder(
+                  //       shrinkWrap: true,
+                  //       scrollDirection: Axis.horizontal,
+                  //       itemCount: snapshot.data?.docs.length,
+                  //       itemBuilder: (ctx, index) => Container(
+                  //           padding: EdgeInsets.all(8),
+                  //           child: Row(
+                  //             children: [
+                  //               Row(
+                  //                 children: [],
+                  //               ),
+
+                  //               // image: "aaa",
+                  //               // category: snapshot.data.docs[index]['name'],
+                  //               // numOfBrands: snapshot.data.docs[index]
+                  //               //     ['maxcost'],
+                  //               // press: () {},
+
+                  //               // This trailing comma makes auto-f
+                  //             ],
+                  //           )),
+                  //     ));
                 }),
           ),
           Expanded(
@@ -440,21 +466,3 @@ class ProductList extends ChangeNotifier {
 //     );
 //   }
 // }
-
-/*
-
-
-Future<DocumentReference> updateCPost(String title, String content) {
-  return FirebaseFirestore.instance.collection('article').add(<String, dynamic>{
-    // 'pic' : pic,
-    'title': title,
-    'content': content,
-    'userId': FirebaseAuth.instance.currentUser!.uid,
-  });
-}
-*/
-@override
-State<StatefulWidget> createState() {
-  // TODO: implement createState
-  throw UnimplementedError();
-}
