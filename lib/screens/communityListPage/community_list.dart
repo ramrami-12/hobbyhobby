@@ -21,8 +21,6 @@ class CommunitylistPage extends StatefulWidget {
 }
 
 class _CommunitylistPageState extends State<CommunitylistPage> {
-  StreamSubscription<QuerySnapshot>? _post;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
