@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hobbyhobby/screens/MyPreferencePage/my_peference.dart';
+import 'package:hobbyhobby/screens/communityListPage/community_list.dart';
+import 'package:hobbyhobby/models/firebase.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -23,15 +25,25 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Get.to(MyPreferPage());
-              },
-              child: Text(
-                '페이지 이동',
-                style: TextStyle(
-                  fontFamily: 'NanumSquareRoundR',
-                  fontSize: 30,
+            Container(
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xffFFFACC),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // <-- Radius
+                  ),
+                ),
+                onPressed: () {
+                  Get.to(CommunitylistPage());
+                },
+                child: Text(
+                  'Add My Community !',
+                  style: TextStyle(
+                    fontFamily: 'NanumSquareRoundR',
+                    fontSize: 23,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             )
