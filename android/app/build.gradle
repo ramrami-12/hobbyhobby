@@ -22,6 +22,12 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
+<<<<<<< HEAD
+// START: FlutterFire Configuration
+apply plugin: 'com.google.gms.google-services'
+// END: FlutterFire Configuration
+=======
+>>>>>>> 656e0103e26fceba9a171d468e5e8cec4035156d
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
@@ -42,6 +48,10 @@ android {
     }
 
     defaultConfig {
+<<<<<<< HEAD
+=======
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+>>>>>>> 656e0103e26fceba9a171d468e5e8cec4035156d
         applicationId "com.example.hobbyhobby"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
@@ -51,6 +61,10 @@ android {
 
     buildTypes {
         release {
+<<<<<<< HEAD
+=======
+            // TODO: Add your own signing config for the release build.
+>>>>>>> 656e0103e26fceba9a171d468e5e8cec4035156d
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
