@@ -137,11 +137,6 @@ class _postlistPageState extends State<postlistPage> {
                                       ),
                                     ));
                               },
-                              /*PostAddPage(
-                                addPost: (pic, title, content) =>
-                                    addPostToCommunity(pic, title, content),
-                                post: ProductList.letter,
-                                */
                               child: const Icon(
                                 Icons.add,
                                 color: Colors.white,
