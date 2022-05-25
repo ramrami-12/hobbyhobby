@@ -1,11 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hobbyhobby/firebase_options.dart';
 import 'screens/homePage/home.dart';
 
-void main() {
+Future<void> main() async {
   runApp(GetMaterialApp(home: MyApp()));
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 class MyApp extends StatelessWidget {
