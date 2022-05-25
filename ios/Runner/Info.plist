@@ -43,7 +43,10 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+<<<<<<< HEAD
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+=======
+>>>>>>> 656e0103e26fceba9a171d468e5e8cec4035156d
 </dict>
 </plist>
