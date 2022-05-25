@@ -49,10 +49,6 @@ class _AddPageState extends State<PostAddPage> {
     final firebase_storage.Reference ref =
         firebase_storage.FirebaseStorage.instance.ref(_controller.text);
     final firebase_storage.UploadTask task = ref.putFile(file);
-    // final firebase_storage.UploadTask task = firebase_storage.FirebaseStorage.instance
-    //     .ref(_controller.text)
-    //     .putFile(file);
-    //print(file);
 
     try {
       firebase_storage.TaskSnapshot snapshot = await task;
