@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:hobbyhobby/main.dart';
+import 'package:hobbyhobby/screens/communityDetailPage/community_detail.dart';
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:hobbyhobby/models/firebase.dart';
@@ -16,32 +18,407 @@ import '../PostAddPage/post_add.dart';
 import 'firebase_options.dart';
 import 'package:path/path.dart';
 import 'package:hobbyhobby/main.dart';
+import 'package:hobbyhobby/screens/PostListPage/chat_list.dart';
 
-class postlistPage extends StatefulWidget {
-  @override
-  _postlistPageState createState() => _postlistPageState();
-}
-
-class _postlistPageState extends State<postlistPage> {
-  StreamSubscription<QuerySnapshot>? _post;
-
-  List<Post> _PostMessage = [];
-  List<Post> get PostMessage => _PostMessage;
-  var com_id = "";
-
+class PostListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final comData = Get.arguments[0];
+    final docID = Get.arguments[1];
+    final int docIdx = Get.arguments[2];
+
+    print(docIdx);
+
     return Scaffold(
       body: Column(
         children: [
+          TopBar(),
+          TitleSection(docIdx, docID),
+          Expanded(child: PostListSection(docID, docIdx)),
+        ],
+      ),
+    );
+  }
+}
+
+class PostListSection extends StatelessWidget {
+  final String docID;
+  final int docIdx;
+
+  PostListSection(this.docID, this.docIdx);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection('Communities')
+          .doc(docID)
+          .collection('Post')
+          .snapshots(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        return ListView.builder(
+            itemCount: snapshot.data.docs.length,
+            itemBuilder: (ctx, index) {
+              return Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                          color: Color(0xffD7E9FF),
+                          borderRadius: BorderRadius.circular(20)),
+                      margin: EdgeInsets.all(8),
+                      width: 338,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 48,
+                                width: 48,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: Colors.red, shape: BoxShape.circle),
+                                child: Text('사진'),
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '이름',
+                                    style: TextStyle(
+                                        fontFamily: "Nunito",
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  snapshot.data.docs[index].data()['created'] ==
+                                          null
+                                      ? Text("")
+                                      : Text(
+                                          snapshot.data.docs[index]
+                                              .data()['created']
+                                              .toDate()
+                                              .toString(),
+                                          style: TextStyle(
+                                              fontFamily: "Nunito",
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                              child: Text(
+                            snapshot.data.docs[index]
+                                .data()['content']
+                                .toString(),
+                            style: TextStyle(
+                                fontFamily: "Nunito",
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          )),
+                          Row(
+                            children: [
+                              Container(
+                                child: Text("따봉 갯수"),
+                              ),
+                              SizedBox(width: 170),
+                              Container(
+                                child: TextButton.icon(
+                                  icon: Icon(Icons.chat_outlined),
+                                  style: ElevatedButton.styleFrom(
+                                    shape: StadiumBorder(),
+                                    primary: Color(0xffD7E9FF),
+                                  ),
+                                  label: Text(
+                                    '댓글',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  onPressed: () {
+                                    String postID =
+                                        snapshot.data.docs[index].id;
+                                    Get.to(
+                                      ChatListPage(),
+                                      arguments: [docID, docIdx, postID],
+                                    );
+                                  },
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      )
+
+                      // Container(
+                      //   child: Text(snapshot.data.docs[index]
+                      //       .data()['created']
+                      //       .toDate()
+                      //       .toString()),
+                      // ),
+                      ),
+                ],
+              );
+            });
+      },
+    );
+  }
+}
+
+class TitleSection extends StatelessWidget {
+  final int docIdx;
+  final String docID;
+  TitleSection(this.docIdx, this.docID);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+        stream:
+            FirebaseFirestore.instance.collection("Communities").snapshots(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            Map<String, dynamic> docData = snapshot.data!.docs[docIdx].data();
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  margin: EdgeInsets.all(15),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      docData["com_name"],
+                      style: TextStyle(
+                          fontFamily: "Nunito",
+                          fontWeight: FontWeight.bold,
+                          fontSize: 27),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        print("press");
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PostAddPage(
+                                addPost: (pic, content, mission) =>
+                                    ProductList.addPostToCommunity(
+                                        pic, content, mission, docID),
+                                post: ProductList._letter,
+                              ),
+                            ));
+                      },
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Color(0xffFFC700),
+                    ),
+                  ),
+                )
+              ],
+            );
+          }
+        });
+  }
+}
+
+class ProductList extends ChangeNotifier {
+  static String? docIdx;
+
+  ProductList() {
+    init();
+  }
+
+  final user = FirebaseAuth.instance.currentUser!;
+
+  Future<void> init() async {
+    await Firebase.initializeApp();
+
+    FirebaseAuth.instance.userChanges().listen((user) {
+      // if (user != null) {
+      _guestBookSubscription = FirebaseFirestore.instance
+          .collection('Post')
+          // .orderBy('price', descending: false)
+          .snapshots()
+          .listen((snapshot) {
+        for (final document in snapshot.docs) {
+          //Product Image, Name, Price and Description
+          _letter.add(
+            Post(
+              pic: document.data()['pic'] as String,
+              title: document.data()['title'] as String,
+              content: document.data()['content'] as String,
+              mission: document.data()['mission'] as bool,
+              doc_id: document.id,
+              like: [""],
+              index: -1,
+              created: FieldValue.serverTimestamp().toString(),
+            ),
+          );
+        }
+        notifyListeners();
+      });
+      //   } else {
+      //     _letter = [];
+      //     _guestBookSubscription?.cancel(); // new
+      //   }
+      //   notifyListeners();
+      //
+    });
+  }
+
+  String? _email;
+  String? get email => _email;
+
+  StreamSubscription<QuerySnapshot>? _guestBookSubscription;
+  static List<Post> _letter = [];
+  static List<Post> get letter => _letter;
+  static String _docid = "";
+  static String get docid => _docid;
+  // final String pic;
+  // final String title;
+  // final String doc_id;
+  // final String content;
+  // final List<String> like;
+  // final int index;
+
+  // static Future<DocumentReference> addCommunity(String title, String content) {
+  //   return FirebaseFirestore.instance
+  //       .collection('Community')
+  //       .add(<String, dynamic>{
+  //     'title': title,
+  //     'content': content,
+  //     'userId': FirebaseAuth.instance.currentUser!.uid,
+  //     'like': "",
+  //     'index': -1,
+  //     'created': FieldValue.serverTimestamp(),
+  //   });
+  // }
+
+  static Future<DocumentReference> addPostToCommunity(
+      String pic, String content, bool mission, String docID) {
+    return FirebaseFirestore.instance
+        .collection('Communities')
+        .doc(docID)
+        .collection('Post')
+        .add(<String, dynamic>{
+      'pic': pic,
+      'title': "",
+      'content': content,
+      'mission': mission,
+      // 'userId': FirebaseAuth.instance.currentUser!.uid,
+      'like': "",
+      'index': -1,
+      'created': FieldValue.serverTimestamp(),
+    });
+  }
+
+  Future<DocumentReference> updateMessageToGuestBook(
+      String title, String content) {
+    return FirebaseFirestore.instance
+        .collection('Community')
+        .add(<String, dynamic>{
+      'title': title,
+      'content': content,
+      'userId': FirebaseAuth.instance.currentUser!.uid,
+    });
+  }
+}
+
+class TopBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    List<String> MissionList = [
+      "평봉에서 만남",
+      "취미 활동 진행",
+      "함께 인증사진 찍기",
+      "줌 미팅",
+      "카페가기",
+      "한동 한바퀴",
+      "다같이 공부"
+    ];
+    int rnd = Random().nextInt(7);
+
+    return Container(
+      padding: EdgeInsets.only(top: 10),
+      child: Row(
+        children: [
+          SizedBox(width: 10),
           Row(
             children: [
-              Container(
-                width: 10,
-              ),
               ElevatedButton(
                 onPressed: () {
+                  print('Alert!');
                   // Respond to button press
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      // return object of type Dialog
+                      return Center(
+                        child: Container(
+                          width: 800,
+                          child: Column(
+                            children: [
+                              AlertDialog(
+                                insetPadding: EdgeInsets.only(top: 200),
+                                backgroundColor: Color(0xffFFCDCD),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(30.0))),
+                                content: Stack(children: [
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: 80),
+                                        Text(
+                                          "Mission",
+                                          style: TextStyle(
+                                              fontFamily: "Nunito",
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        Text(MissionList[rnd],
+                                            style: TextStyle(
+                                                fontFamily: "Nunito",
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18)),
+                                        SizedBox(height: 80),
+                                      ],
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 0.0,
+                                    right: 0.0,
+                                    child: FlatButton(
+                                      child: new Text("X"),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   primary: Color(0xffFFCDCD),
@@ -69,15 +446,12 @@ class _postlistPageState extends State<postlistPage> {
                     print("hello");
                     data.docs.forEach((element) {
                       // print(element['com_name']);
-                      com_id = data.docs[0].id;
-                      print(com_id);
+                      print(data.docs[0].id);
                     });
                   });
-
-                  // print(collectionStream.isEmpty);
                 },
                 icon: Icon(
-                  // <-- Icon
+                  // <— Icon
                   Icons.storefront_sharp,
                   color: Colors.black,
                   size: 24.0,
@@ -92,347 +466,12 @@ class _postlistPageState extends State<postlistPage> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
-                ), // <-- Text
+                ), // <— Text
               ),
             ],
-          ),
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('Communities')
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  }
-                  return Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(width: 20),
-                          Text(
-                            snapshot.data!.docs[0]['com_name'],
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          ),
-                          Container(
-                            width: 180,
-                          ),
-                          SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: FloatingActionButton(
-                              onPressed: () {
-                                print("press");
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PostAddPage(
-                                        addPost: (pic, title, content) =>
-                                            ProductList.addPostToCommunity(
-                                                pic, title, content),
-                                        post: ProductList._letter,
-                                      ),
-                                    ));
-                              },
-                              child: const Icon(
-                                Icons.add,
-                                color: Colors.white,
-                              ),
-                              backgroundColor: Color(0xffFFC700),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  );
-                }),
-          ),
-          Expanded(
-            child: StreamBuilder<QuerySnapshot>(
-                stream:
-                    FirebaseFirestore.instance.collection('Post').snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  }
-
-                  return SizedBox(
-                      height: 130,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data?.docs.length,
-                        itemBuilder: (ctx, index) => Container(
-                            padding: EdgeInsets.all(8),
-                            child: Column(
-                              children: [
-                                Text(snapshot.data!.docs[index]['title']),
-                                Text(snapshot.data!.docs[index]['content']),
-                              ],
-                            )
-                            // image: "aaa",
-                            // category: snapshot.data.docs[index]['name'],
-                            // numOfBrands: snapshot.data.docs[index]
-                            //     ['maxcost'],
-                            // press: () {},
-
-                            ),
-                      ));
-                }),
           ),
         ],
       ),
     );
   }
 }
-
-// 미션 팝업창
-// 댓글 페이지
-
-class ProductList extends ChangeNotifier {
-  ProductList() {
-    init();
-  }
-
-  final user = FirebaseAuth.instance.currentUser!;
-
-  Future<void> init() async {
-    await Firebase.initializeApp();
-
-    FirebaseAuth.instance.userChanges().listen((user) {
-      // if (user != null) {
-      _guestBookSubscription = FirebaseFirestore.instance
-          .collection('Post')
-          // .orderBy('price', descending: false)
-          .snapshots()
-          .listen((snapshot) {
-        for (final document in snapshot.docs) {
-          //Product Image, Name, Price and Description
-          _letter.add(
-            Post(
-              pic: document.data()['pic'] as String,
-              title: document.data()['title'] as String,
-              content: document.data()['content'] as String,
-              doc_id: document.id,
-              like: [""],
-              index: -1,
-              created: FieldValue.serverTimestamp().toString(),
-            ),
-          );
-        }
-        notifyListeners();
-      });
-      //   } else {
-      //     _letter = [];
-      //     _guestBookSubscription?.cancel(); // new
-      //   }
-      //   notifyListeners();
-      //
-    });
-  }
-
-  String? _email;
-  String? get email => _email;
-
-  StreamSubscription<QuerySnapshot>? _guestBookSubscription;
-  static List<Post> _letter = [];
-  static List<Post> get letter => _letter;
-  // final String pic;
-  // final String title;
-  // final String doc_id;
-  // final String content;
-  // final List<String> like;
-  // final int index;
-
-  // static Future<DocumentReference> addCommunity(String title, String content) {
-  //   return FirebaseFirestore.instance
-  //       .collection('Community')
-  //       .add(<String, dynamic>{
-  //     'title': title,
-  //     'content': content,
-  //     'userId': FirebaseAuth.instance.currentUser!.uid,
-  //     'like': "",
-  //     'index': -1,
-  //     'created': FieldValue.serverTimestamp(),
-  //   });
-  // }
-
-  static Future<DocumentReference> addPostToCommunity(
-      String pic, String title, String content) {
-    return FirebaseFirestore.instance.collection('Post').add(<String, dynamic>{
-      'pic': pic,
-      'title': title,
-      'content': content,
-      // 'userId': FirebaseAuth.instance.currentUser!.uid,
-      'like': "",
-      'index': -1,
-      'created': FieldValue.serverTimestamp(),
-    });
-  }
-
-  Future<DocumentReference> updateMessageToGuestBook(
-      String title, String content) {
-    return FirebaseFirestore.instance
-        .collection('Community')
-        .add(<String, dynamic>{
-      'title': title,
-      'content': content,
-      'userId': FirebaseAuth.instance.currentUser!.uid,
-    });
-  }
-}
-
-// class Productlist extends ChangeNotifier {
-//   ProductList() {
-//     init();
-//   }
-
-//   Future<void> init() async {
-//     await Firebase.initializeApp();
-//   }
-// }
-
-// class _AddPageState extends State<AddPage> {
-//   final _formKey = GlobalKey<FormState>(debugLabel: '_AddPageState');
-//   final _controller = TextEditingController();
-//   final _controller2 = TextEditingController();
-
-//   FirebaseFirestore storage = FirebaseFirestore.instance;
-
-//   // final picker = ImagePicker();
-//   // Future getImage () async {
-//   //   final image = await ImagePicker.platform.pickImage(source: ImageSource.gallery);
-//   //   setState((){
-//   //     _image = image!;
-//   //   });
-//   // Future<String> uploadFile() async {
-//   //   final firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance
-//   //       .ref(_controller.text);
-//   //   // final firebase_storage.UploadTask task = firebase_storage.FirebaseStorage.instance
-//   //   //     .ref(_controller.text)
-//   //   //     .putFile(file);
-//   //   //print(file);
-
-//   //   try {
-//   //     firebase_storage.TaskSnapshot snapshot = await task;
-
-//   //   } on FirebaseException catch (e) {
-//   //     print(task.snapshot);
-//   //     // e.g, e.code == 'canceled'
-//   //   }
-//   //   final String url = (await ref.getDownloadURL());
-//   //   return url;
-//   // }
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Add"),
-//         actions: <Widget>[
-//           FlatButton(
-//             child: Text('Save', style: TextStyle(fontSize: 15)),
-//             onPressed: () async {
-//               if (_formKey.currentState == null) {
-//                 print("_formKey.currentState is null!");
-//               } else if (_formKey.currentState!.validate()) {
-//                 String fileName;
-//                 String url;
-//                 // if(_image!=null){
-//                 //   fileName = basename(_image!.path);
-//                 //   url = await uploadFile(File(_image!.path));
-//                 // }
-//                 // else{
-//                 //   url='';
-//                 // }
-//                 // await widget.addMessage(_controller.text,_controller2.text);
-
-//                 _controller.clear();
-//                 _controller2.clear();
-//                 // setState((){
-//                 //   _image=null;
-//                 // });
-//                 Navigator.pop(context);
-
-//                 //uploadImageToFirebase();
-
-//               }
-//             },
-//             textColor: Colors.white,
-//           ),
-//         ],
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(40.0),
-//         child: Column(
-//           children: [
-//             Container(
-//               width: MediaQuery.of(context).size.width,
-//               height: 200.0,
-//               child: Center(
-//                   // child : _image ==null
-//                   //     ?Image.asset('assets/images/leaf.png')
-//                   //     :Image.file(File(_image!.path)),
-//                   ),
-//             ),
-//             // Row(
-//             //   mainAxisAlignment: MainAxisAlignment.end,
-//             //   children: [
-//             //     FloatingActionButton(
-//             //       onPressed: getImage,
-//             //       tooltip: 'getGalleryImage',
-//             //       child : Icon(Icons.camera_alt),
-//             //     ),
-//             //   ],
-//             // ),
-//             Form(
-//               key: _formKey,
-//               child: Column(
-//                 children: [
-//                   Row(
-//                     children: [
-//                       Expanded(
-//                         child: TextFormField(
-//                           controller: _controller,
-//                           decoration: const InputDecoration(
-//                             hintText: 'Title',
-//                           ),
-//                           validator: (value) {
-//                             if (value == null || value.isEmpty) {
-//                               return 'Enter your message to continue';
-//                             }
-//                             return null;
-//                           },
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   Row(
-//                     children: [
-//                       Expanded(
-//                         child: TextFormField(
-//                           controller: _controller2,
-//                           decoration: const InputDecoration(
-//                             hintText: 'Content',
-//                           ),
-//                           validator: (value) {
-//                             if (value == null || value.isEmpty) {
-//                               return 'Enter your message to continue';
-//                             }
-//                             return null;
-//                           },
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

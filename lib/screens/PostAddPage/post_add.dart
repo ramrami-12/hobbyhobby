@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,7 +20,7 @@ import 'package:hobbyhobby/screens/PostListPage/post_list.dart';
 
 class PostAddPage extends StatefulWidget {
   const PostAddPage({required this.addPost, required this.post});
-  final FutureOr<void> Function(String pic, String title, String content)
+  final FutureOr<void> Function(String pic, String content, bool _ischecked)
       addPost;
   final List<Post> post;
 
@@ -31,6 +32,7 @@ class _AddPageState extends State<PostAddPage> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_AddPageState');
   final _controller = TextEditingController();
   final _controller2 = TextEditingController();
+  bool _ischecked = false;
   PickedFile? _image;
 
   firebase_storage.FirebaseStorage storage =
@@ -63,116 +65,399 @@ class _AddPageState extends State<PostAddPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("ADD POST"),
-        backgroundColor: Colors.green,
-        centerTitle: true,
-        actions: <Widget>[
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 30, color: Colors.black),
-            ),
-            child: Text(
-              'Save',
-              style: TextStyle(fontSize: 20, color: Colors.black),
-            ),
-            onPressed: () async {
-              if (_formKey.currentState == null) {
-                print("_formKey.currentState is null!");
-              } else if (_formKey.currentState!.validate()) {
-                String fileName;
-                String url;
-                if (_image != null) {
-                  fileName = basename(_image!.path);
-                  url = await uploadFile(File(_image!.path));
-                } else {
-                  url = '';
-                }
-                await widget.addPost(url, _controller.text, _controller2.text);
-                print(_controller.text);
+      body: Column(
+        children: [
+          TopBar(),
 
-                _controller.clear();
-                _controller2.clear();
-                setState(() {
-                  _image = null;
-                });
-                Navigator.pop(context);
+          // appBar: AppBar(
+          //   title: Text("ADD POST"),
+          //   backgroundColor: Colors.green,
+          //   centerTitle: true,
+          //   actions: <Widget>[
+          //     TextButton(
+          //       style: TextButton.styleFrom(
+          //         textStyle: const TextStyle(fontSize: 30, color: Colors.black),
+          //       ),
+          //       child: Text(
+          //         'Save',
+          //         style: TextStyle(fontSize: 20, color: Colors.black),
+          //       ),
+          //       onPressed: () async {
+          //         if (_formKey.currentState == null) {
+          //           print("_formKey.currentState is null!");
+          //         } else if (_formKey.currentState!.validate()) {
+          //           String fileName;
+          //           String url;
+          //           if (_image != null) {
+          //             fileName = basename(_image!.path);
+          //             url = await uploadFile(File(_image!.path));
+          //           } else {
+          //             url = '';
+          //           }
+          //           await widget.addPost(url, _controller.text, _controller2.text);
+          //           print(_controller.text);
 
-                //uploadImageToFirebase();
+          //           _controller.clear();
+          //           _controller2.clear();
+          //           setState(() {
+          //             _image = null;
+          //           });
+          //           Navigator.pop(context);
 
-              }
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(40.0),
-        child: Column(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 200.0,
-              child: Center(
-                child: _image == null
-                    ? Image.asset('assets/images/hobby.png')
-                    : Image.file(File(_image!.path)),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+          //           //uploadImageToFirebase();
+
+          //         }
+          //       },
+          //     ),
+          //   ],
+          // ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
               children: [
-                FloatingActionButton(
-                  onPressed: getImage,
-                  tooltip: 'getGalleryImage',
-                  child: Icon(Icons.camera_alt),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Center(
+                        child: Text('게시글 작성',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black)),
+                      ),
+                      // Row(
+                      //   children: [
+                      //     Expanded(
+                      //       child: TextFormField(
+                      //         controller: _controller,
+                      //         decoration: const InputDecoration(
+                      //           hintText: 'Title',
+                      //         ),
+                      //         validator: (value) {
+                      //           if (value == null || value.isEmpty) {
+                      //             return 'Enter your message to continue';
+                      //           }
+                      //           return null;
+                      //         },
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xffFFFACC),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextFormField(
+                                  maxLines: 7,
+                                  controller: _controller2,
+                                  decoration: const InputDecoration(
+                                    hintText: '',
+                                    fillColor: Colors.yellow,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.yellow, width: 3),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(30)),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.yellow, width: 3),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(30)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.yellow, width: 3),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(30)),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Enter your message to continue';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 150.0,
+                        child: Center(
+                          child: _image == null
+                              ? Image.asset('assets/images/hobby.png')
+                              : Image.file(File(_image!.path)),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FloatingActionButton(
+                            onPressed: getImage,
+                            tooltip: 'getGalleryImage',
+                            child: Icon(Icons.camera_alt),
+                            focusColor: Colors.yellow,
+                          ),
+                        ],
+                      ),
+                      Container(
+                        height: 25,
+                      ),
+
+                      Row(
+                        children: [
+                          Container(width: 250),
+                          Text(
+                            '인증용',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
+                          Checkbox(
+                              value: _ischecked,
+                              activeColor: Color(0xffC8FFCD),
+                              checkColor: Colors.black,
+                              onChanged: (value) {
+                                setState(() {
+                                  _ischecked = value!;
+                                });
+                              })
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 160,
+                              height: 48,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState == null) {
+                                    print("_formKey.currentState is null!");
+                                  } else if (_formKey.currentState!
+                                      .validate()) {
+                                    String fileName;
+                                    String url;
+                                    if (_image != null) {
+                                      fileName = basename(_image!.path);
+                                      url =
+                                          await uploadFile(File(_image!.path));
+                                    } else {
+                                      url = '';
+                                    }
+                                    await widget.addPost(
+                                        url, _controller2.text, _ischecked);
+                                    print(_controller.text);
+
+                                    _controller.clear();
+                                    _controller2.clear();
+                                    setState(() {
+                                      _image = null;
+                                    });
+                                    Navigator.pop(context);
+
+                                    //uploadImageToFirebase();
+
+                                  }
+                                },
+
+                                // Respond to button press
+
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xffD7E9FF),
+                                  shape: StadiumBorder(),
+                                ),
+                                child: Text(
+                                  'Add',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 160,
+                              height: 48,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  // Respond to button press
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xffFFFACC),
+                                  shape: StadiumBorder(),
+                                ),
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _controller,
-                          decoration: const InputDecoration(
-                            hintText: 'Title',
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TopBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    List<String> MissionList = [
+      "평봉에서 만남",
+      "취미 활동 진행",
+      "함께 인증사진 찍기",
+      "줌 미팅",
+      "카페가기",
+      "한동 한바퀴",
+      "다같이 공부"
+    ];
+    int rnd = Random().nextInt(7);
+
+    return Container(
+      padding: EdgeInsets.only(top: 10),
+      child: Row(
+        children: [
+          SizedBox(width: 10),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  print('Alert!');
+                  // Respond to button press
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      // return object of type Dialog
+                      return Center(
+                        child: Container(
+                          width: 800,
+                          child: Column(
+                            children: [
+                              AlertDialog(
+                                insetPadding: EdgeInsets.only(top: 200),
+                                backgroundColor: Color(0xffFFCDCD),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(30.0))),
+                                content: Stack(children: [
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(height: 80),
+                                        Text(
+                                          "Mission",
+                                          style: TextStyle(
+                                              fontFamily: "Nunito",
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        Text(MissionList[rnd],
+                                            style: TextStyle(
+                                                fontFamily: "Nunito",
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18)),
+                                        SizedBox(height: 80),
+                                      ],
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 0.0,
+                                    right: 0.0,
+                                    child: FlatButton(
+                                      child: new Text("X"),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            ],
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter your message to continue';
-                            }
-                            return null;
-                          },
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xffFFCDCD),
+                  shape: StadiumBorder(),
+                ),
+                child: Text(
+                  'Mission',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _controller2,
-                          decoration: const InputDecoration(
-                            hintText: 'Content',
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Enter your message to continue';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
-        ),
+              Container(
+                width: 170,
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
+                      collectionStream = FirebaseFirestore.instance
+                          .collection('Communities')
+                          .snapshots()
+                          .listen((data) {
+                    print(data.docs);
+                    print("hello");
+                    data.docs.forEach((element) {
+                      // print(element['com_name']);
+                      print(data.docs[0].id);
+                    });
+                  });
+                },
+                icon: Icon(
+                  // <— Icon
+                  Icons.storefront_sharp,
+                  color: Colors.black,
+                  size: 24.0,
+                ),
+                style: ElevatedButton.styleFrom(
+                  shape: StadiumBorder(),
+                  primary: Color(0xffC8FFCD),
+                ),
+                label: Text(
+                  'Store',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ), // <— Text
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

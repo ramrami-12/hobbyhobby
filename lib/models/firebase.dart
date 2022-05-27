@@ -6,6 +6,7 @@ class Post {
       required this.title,
       required this.doc_id,
       required this.content,
+      required this.mission,
       required this.like,
       required this.index,
       required this.created});
@@ -15,6 +16,7 @@ class Post {
   final String content;
   final String created;
   final List<String> like;
+  final bool mission;
   final int index;
 }
 
@@ -52,7 +54,9 @@ class Chats {
       {required this.chat_content,
       required this.chat_id,
       required this.chat_writer,
-      required this.date});
+      required this.date,
+      required String name,
+      required String message});
 
   final String chat_content;
   final String date;
