@@ -240,22 +240,7 @@ class _GuestBookState extends State<GuestBook> {
 //     // }
 
 //     return FirebaseFirestore.instance
-//         .collection('Communities')
-//         .doc(docID)
-//         .collection('Post')
-//         .doc(postID)
-//         .collection('Chats')
-//         .add(<String, dynamic>{
-//       'chat_content': message,
-//       'chat_id': '',
-//       'chat_writer': '',
-//       'date': DateTime.now().millisecondsSinceEpoch,
-//       // 'name': FirebaseAuth.instance.currentUser!.displayName,
-//       // 'userId': FirebaseAuth.instance.currentUser!.uid,
-//     });
-//   }
-// }
-
+//
 class ChatListSection extends StatelessWidget {
   final String docID;
   final String postID;
