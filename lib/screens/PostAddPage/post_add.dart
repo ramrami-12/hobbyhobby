@@ -220,6 +220,7 @@ class _AddPageState extends State<PostAddPage> {
                         ),
 
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Container(width: 250),
                             Text(
@@ -242,8 +243,9 @@ class _AddPageState extends State<PostAddPage> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              SizedBox(
+                              Container(
                                 width: 160,
                                 height: 48,
                                 child: ElevatedButton(
@@ -294,7 +296,7 @@ class _AddPageState extends State<PostAddPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              Container(
                                 width: 160,
                                 height: 48,
                                 child: ElevatedButton(
