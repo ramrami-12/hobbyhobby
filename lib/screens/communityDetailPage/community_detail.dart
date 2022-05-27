@@ -23,18 +23,21 @@ class CommunityDetailPage extends StatelessWidget {
     int idx = arguments[2];
 
     return Scaffold(
-        body: Column(
-      children: [
-        TopBar(),
-        SizedBox(height: 10),
-        TitleSection(comDetailData['com_name']),
-        SizedBox(height: 40),
-        DetailSection(comDetailData['com_detail']),
-        SizedBox(height: 20),
-        TagList(comDetailData['hash_tag'].cast<String>()),
-        JoinButton(comDetailData, docID, idx),
-      ],
-    ));
+      body: SafeArea(
+        child: Column(
+          children: [
+            TopBar(),
+            SizedBox(height: 10),
+            TitleSection(comDetailData['com_name']),
+            SizedBox(height: 40),
+            DetailSection(comDetailData['com_detail']),
+            SizedBox(height: 20),
+            TagList(comDetailData['hash_tag'].cast<String>()),
+            JoinButton(comDetailData, docID, idx),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -225,118 +228,119 @@ class TopBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(width: 10),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  print('Alert!');
-                  // Respond to button press
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      // return object of type Dialog
-                      return Center(
-                        child: Container(
-                          width: 800,
-                          child: Column(
-                            children: [
-                              AlertDialog(
-                                insetPadding: EdgeInsets.only(top: 200),
-                                backgroundColor: Color(0xffFFCDCD),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(30.0))),
-                                content: Stack(children: [
-                                  Center(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(height: 80),
-                                        Text(
-                                          "Mission",
+          // SizedBox(width: 10),
+
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: ElevatedButton(
+              onPressed: () {
+                print('Alert!');
+                // Respond to button press
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    // return object of type Dialog
+                    return Center(
+                      child: Container(
+                        width: 800,
+                        child: Column(
+                          children: [
+                            AlertDialog(
+                              insetPadding: EdgeInsets.only(top: 200),
+                              backgroundColor: Color(0xffFFCDCD),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0))),
+                              content: Stack(children: [
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 80),
+                                      Text(
+                                        "Mission",
+                                        style: TextStyle(
+                                            fontFamily: "Nunito",
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      Text(MissionList[rnd],
                                           style: TextStyle(
                                               fontFamily: "Nunito",
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                        Text(MissionList[rnd],
-                                            style: TextStyle(
-                                                fontFamily: "Nunito",
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18)),
-                                        SizedBox(height: 80),
-                                      ],
-                                    ),
+                                              fontSize: 18)),
+                                      SizedBox(height: 80),
+                                    ],
                                   ),
-                                  Positioned(
-                                    top: 0.0,
-                                    right: 0.0,
-                                    child: FlatButton(
-                                      child: new Text("X"),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
+                                ),
+                                Positioned(
+                                  top: 0.0,
+                                  right: 0.0,
+                                  child: FlatButton(
+                                    child: new Text("X"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
                                   ),
-                                ]),
-                              ),
-                            ],
-                          ),
+                                ),
+                              ]),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xffFFCDCD),
-                  shape: StadiumBorder(),
-                ),
-                child: Text(
-                  'Mission',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                      ),
+                    );
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xffFFCDCD),
+                shape: StadiumBorder(),
               ),
-              Container(
-                width: 170,
-              ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
-                      collectionStream = FirebaseFirestore.instance
-                          .collection('Communities')
-                          .snapshots()
-                          .listen((data) {
-                    print(data.docs);
-                    print("hello");
-                    data.docs.forEach((element) {
-                      // print(element['com_name']);
-                      print(data.docs[0].id);
-                    });
-                  });
-                },
-                icon: Icon(
-                  // <— Icon
-                  Icons.storefront_sharp,
+              child: Text(
+                'Mission',
+                style: TextStyle(
                   color: Colors.black,
-                  size: 24.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                style: ElevatedButton.styleFrom(
-                  shape: StadiumBorder(),
-                  primary: Color(0xffC8FFCD),
-                ),
-                label: Text(
-                  'Store',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ), // <— Text
               ),
-            ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
+                    collectionStream = FirebaseFirestore.instance
+                        .collection('Communities')
+                        .snapshots()
+                        .listen((data) {
+                  print(data.docs);
+                  print("hello");
+                  data.docs.forEach((element) {
+                    // print(element['com_name']);
+                    print(data.docs[0].id);
+                  });
+                });
+              },
+              icon: Icon(
+                // <— Icon
+                Icons.storefront_sharp,
+                color: Colors.black,
+                size: 24.0,
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: StadiumBorder(),
+                primary: Color(0xffC8FFCD),
+              ),
+              label: Text(
+                'Store',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ), // <— Text
+            ),
           ),
         ],
       ),

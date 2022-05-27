@@ -25,11 +25,13 @@ class _CommunitylistPageState extends State<CommunitylistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // body: Column(children: [TopBar(), CommunityList()]),
-      body: Column(children: [
-        TopBar(),
-        SizedBox(height: 20),
-        Expanded(child: CommunityList())
-      ]),
+      body: SafeArea(
+        child: Column(children: [
+          TopBar(),
+          SizedBox(height: 20),
+          Expanded(child: CommunityList())
+        ]),
+      ),
     );
   }
 }
@@ -67,24 +69,7 @@ class CommunityList extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       print(com_name);
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          // builder: (context) => MyInfoMain(
-                          //   uid: uid as String,
-                          //   imgName: '',
-                          //   personality: '',
-                          //   name: '',
-                          //   sex: '',
-                          //   tmp: 0,
-                          // ),
-                          builder: (context) => CommunityDetailPage(),
-                        ),
-                        // MaterialPageRoute(
-                        //   builder: (context) => MyInfo(
-                        //     uid: uid as String,
-                        //   ),
-                        // ),
-                      );
+
                       Get.to(
                         CommunityDetailPage(),
                         arguments: [docData, docID, index],
@@ -169,118 +154,119 @@ class TopBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: 10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(width: 10),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  print('Alert!');
-                  // Respond to button press
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      // return object of type Dialog
-                      return Center(
-                        child: Container(
-                          width: 800,
-                          child: Column(
-                            children: [
-                              AlertDialog(
-                                insetPadding: EdgeInsets.only(top: 200),
-                                backgroundColor: Color(0xffFFCDCD),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(30.0))),
-                                content: Stack(children: [
-                                  Center(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(height: 80),
-                                        Text(
-                                          "Mission",
+          // SizedBox(width: 10),
+
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: ElevatedButton(
+              onPressed: () {
+                print('Alert!');
+                // Respond to button press
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    // return object of type Dialog
+                    return Center(
+                      child: Container(
+                        width: 800,
+                        child: Column(
+                          children: [
+                            AlertDialog(
+                              insetPadding: EdgeInsets.only(top: 200),
+                              backgroundColor: Color(0xffFFCDCD),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0))),
+                              content: Stack(children: [
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 80),
+                                      Text(
+                                        "Mission",
+                                        style: TextStyle(
+                                            fontFamily: "Nunito",
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      Text(MissionList[rnd],
                                           style: TextStyle(
                                               fontFamily: "Nunito",
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 18),
-                                        ),
-                                        Text(MissionList[rnd],
-                                            style: TextStyle(
-                                                fontFamily: "Nunito",
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18)),
-                                        SizedBox(height: 80),
-                                      ],
-                                    ),
+                                              fontSize: 18)),
+                                      SizedBox(height: 80),
+                                    ],
                                   ),
-                                  Positioned(
-                                    top: 0.0,
-                                    right: 0.0,
-                                    child: FlatButton(
-                                      child: new Text("X"),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
+                                ),
+                                Positioned(
+                                  top: 0.0,
+                                  right: 0.0,
+                                  child: FlatButton(
+                                    child: new Text("X"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
                                   ),
-                                ]),
-                              ),
-                            ],
-                          ),
+                                ),
+                              ]),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xffFFCDCD),
-                  shape: StadiumBorder(),
-                ),
-                child: Text(
-                  'Mission',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                      ),
+                    );
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xffFFCDCD),
+                shape: StadiumBorder(),
               ),
-              Container(
-                width: 170,
-              ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
-                      collectionStream = FirebaseFirestore.instance
-                          .collection('Communities')
-                          .snapshots()
-                          .listen((data) {
-                    print(data.docs);
-                    print("hello");
-                    data.docs.forEach((element) {
-                      // print(element['com_name']);
-                      print(data.docs[0].id);
-                    });
-                  });
-                },
-                icon: Icon(
-                  // <— Icon
-                  Icons.storefront_sharp,
+              child: Text(
+                'Mission',
+                style: TextStyle(
                   color: Colors.black,
-                  size: 24.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                style: ElevatedButton.styleFrom(
-                  shape: StadiumBorder(),
-                  primary: Color(0xffC8FFCD),
-                ),
-                label: Text(
-                  'Store',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ), // <— Text
               ),
-            ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
+                    collectionStream = FirebaseFirestore.instance
+                        .collection('Communities')
+                        .snapshots()
+                        .listen((data) {
+                  print(data.docs);
+                  print("hello");
+                  data.docs.forEach((element) {
+                    // print(element['com_name']);
+                    print(data.docs[0].id);
+                  });
+                });
+              },
+              icon: Icon(
+                // <— Icon
+                Icons.storefront_sharp,
+                color: Colors.black,
+                size: 24.0,
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: StadiumBorder(),
+                primary: Color(0xffC8FFCD),
+              ),
+              label: Text(
+                'Store',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ), // <— Text
+            ),
           ),
         ],
       ),

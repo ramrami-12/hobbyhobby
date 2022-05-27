@@ -77,10 +77,11 @@ class _MyInfoMain extends State<MyInfoMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Edit Page'),
-        ),
-        body: FutureBuilder<DocumentSnapshot>(
+      appBar: AppBar(
+        title: Text('Edit Page'),
+      ),
+      body: SafeArea(
+        child: FutureBuilder<DocumentSnapshot>(
           future: users.doc(widget.uid).get(),
           builder:
               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -175,7 +176,9 @@ class _MyInfoMain extends State<MyInfoMain> {
 
             return CircularProgressIndicator();
           },
-        ));
+        ),
+      ),
+    );
   }
 
   Widget imageProfile() {
@@ -426,34 +429,36 @@ class _MyInfoEdit extends State<MyInfoEdit> {
       appBar: AppBar(
         title: Text('Edit'),
       ),
-      body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-          child: ListView(
-            children: <Widget>[
-              imageProfile(),
-              SizedBox(height: 20),
-              nameTextField('이름'),
-              makeButtonTextLineSex('성별'),
-              makeButtonTextLinePers('성격'),
-              // makeTempBarTextLine('매너온도'),
-              Container(
-                child: RaisedButton(
-                    child: Text('완료', style: TextStyle(fontSize: 21)),
-                    onPressed: () {
-                      name = '${textFieldController.text}';
-                      updateUser()
-                          .whenComplete(() => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      HomePage(title: 'Homepage'),
-                                ),
-                              ));
-                    }),
-                padding: EdgeInsets.only(left: 100, right: 100),
-              ),
-              SizedBox(height: 20),
-            ],
-          )),
+      body: SafeArea(
+        child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            child: ListView(
+              children: <Widget>[
+                imageProfile(),
+                SizedBox(height: 20),
+                nameTextField('이름'),
+                makeButtonTextLineSex('성별'),
+                makeButtonTextLinePers('성격'),
+                // makeTempBarTextLine('매너온도'),
+                Container(
+                  child: RaisedButton(
+                      child: Text('완료', style: TextStyle(fontSize: 21)),
+                      onPressed: () {
+                        name = '${textFieldController.text}';
+                        updateUser()
+                            .whenComplete(() => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        HomePage(title: 'Homepage'),
+                                  ),
+                                ));
+                      }),
+                  padding: EdgeInsets.only(left: 100, right: 100),
+                ),
+                SizedBox(height: 20),
+              ],
+            )),
+      ),
     );
 
     // return Scaffold(

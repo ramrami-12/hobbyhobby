@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:hobbyhobby/firebase_options.dart';
 import 'package:hobbyhobby/main.dart';
 import 'package:hobbyhobby/screens/PostListPage/post_list.dart';
 import 'package:hobbyhobby/screens/communityDetailPage/community_detail.dart';
@@ -17,7 +17,7 @@ import 'package:path/path.dart';
 import 'package:hobbyhobby/models/firebase.dart';
 // import 'package:provider/provider.dart';
 import '../PostAddPage/post_add.dart';
-import 'firebase_options.dart';
+// import 'firebase_options.dart';
 import 'package:path/path.dart';
 import 'package:hobbyhobby/main.dart';
 
@@ -30,61 +30,63 @@ class ChatListPage extends StatelessWidget {
     print(docIdx);
 
     return Scaffold(
-      body: Column(
-        children: [
-          TopBar(),
-          TitleSection(docIdx, docID, postID),
-          Container(
-            width: 338,
-            height: 600,
-            color: Color(0xffD7E9FF),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton.icon(
-                      icon: Icon(Icons.close, color: Colors.black),
-                      style: ElevatedButton.styleFrom(
-                        shape: StadiumBorder(),
-                        primary: Color(0xffD7E9FF),
+      body: SafeArea(
+        child: Column(
+          children: [
+            TopBar(),
+            TitleSection(docIdx, docID, postID),
+            Container(
+              width: 338,
+              height: 600,
+              color: Color(0xffD7E9FF),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton.icon(
+                        icon: Icon(Icons.close, color: Colors.black),
+                        style: ElevatedButton.styleFrom(
+                          shape: StadiumBorder(),
+                          primary: Color(0xffD7E9FF),
+                        ),
+                        label: Text(
+                          '',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        onPressed: () {
+                          Get.back();
+                        },
                       ),
-                      label: Text(
-                        '',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-                Expanded(child: ChatListSection(docID, postID)),
-                Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                    child: GuestBook(docID, postID),
-                    // decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    ],
                   ),
-                )
+                  Expanded(child: ChatListSection(docID, postID)),
+                  Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Container(
+                      child: GuestBook(docID, postID),
+                      // decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    ),
+                  )
 
-                // Consumer<ApplicationState>(
-                //   builder: (context, appState, _) => Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       //if (appState.loginState == ApplicationLoginState.loggedIn) ...[
-                //       GuestBook(
-                //         addMessage: (message) => appState.addMessageToGuestBook(
-                //             message, docID, postID),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-              ],
+                  // Consumer<ApplicationState>(
+                  //   builder: (context, appState, _) => Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       //if (appState.loginState == ApplicationLoginState.loggedIn) ...[
+                  //       GuestBook(
+                  //         addMessage: (message) => appState.addMessageToGuestBook(
+                  //             message, docID, postID),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -294,7 +296,7 @@ class ChatListSection extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '이름',
+                                      '예은',
                                       style: TextStyle(
                                           fontFamily: "Nunito",
                                           fontSize: 13,
@@ -381,66 +383,133 @@ class TitleSection extends StatelessWidget {
 class TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<String> MissionList = [
+      "평봉에서 만남",
+      "취미 활동 진행",
+      "함께 인증사진 찍기",
+      "줌 미팅",
+      "카페가기",
+      "한동 한바퀴",
+      "다같이 공부"
+    ];
+    int rnd = Random().nextInt(7);
+
     return Container(
       padding: EdgeInsets.only(top: 10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(width: 10),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Respond to button press
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xffFFCDCD),
-                  shape: StadiumBorder(),
-                ),
-                child: Text(
-                  'Mission',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+          // SizedBox(width: 10),
+
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: ElevatedButton(
+              onPressed: () {
+                print('Alert!');
+                // Respond to button press
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    // return object of type Dialog
+                    return Center(
+                      child: Container(
+                        width: 800,
+                        child: Column(
+                          children: [
+                            AlertDialog(
+                              insetPadding: EdgeInsets.only(top: 200),
+                              backgroundColor: Color(0xffFFCDCD),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30.0))),
+                              content: Stack(children: [
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 80),
+                                      Text(
+                                        "Mission",
+                                        style: TextStyle(
+                                            fontFamily: "Nunito",
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                      ),
+                                      Text(MissionList[rnd],
+                                          style: TextStyle(
+                                              fontFamily: "Nunito",
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18)),
+                                      SizedBox(height: 80),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 0.0,
+                                  right: 0.0,
+                                  child: FlatButton(
+                                    child: new Text("X"),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ),
+                              ]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xffFFCDCD),
+                shape: StadiumBorder(),
               ),
-              Container(
-                width: 170,
-              ),
-              ElevatedButton.icon(
-                onPressed: () {
-                  StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
-                      collectionStream = FirebaseFirestore.instance
-                          .collection('Communities')
-                          .snapshots()
-                          .listen((data) {
-                    print(data.docs);
-                    print("hello");
-                    data.docs.forEach((element) {
-                      // print(element['com_name']);
-                      print(data.docs[0].id);
-                    });
-                  });
-                },
-                icon: Icon(
-                  // <— Icon
-                  Icons.storefront_sharp,
+              child: Text(
+                'Mission',
+                style: TextStyle(
                   color: Colors.black,
-                  size: 24.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                style: ElevatedButton.styleFrom(
-                  shape: StadiumBorder(),
-                  primary: Color(0xffC8FFCD),
-                ),
-                label: Text(
-                  'Store',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ), // <— Text
               ),
-            ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: ElevatedButton.icon(
+              onPressed: () {
+                StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
+                    collectionStream = FirebaseFirestore.instance
+                        .collection('Communities')
+                        .snapshots()
+                        .listen((data) {
+                  print(data.docs);
+                  print("hello");
+                  data.docs.forEach((element) {
+                    // print(element['com_name']);
+                    print(data.docs[0].id);
+                  });
+                });
+              },
+              icon: Icon(
+                // <— Icon
+                Icons.storefront_sharp,
+                color: Colors.black,
+                size: 24.0,
+              ),
+              style: ElevatedButton.styleFrom(
+                shape: StadiumBorder(),
+                primary: Color(0xffC8FFCD),
+              ),
+              label: Text(
+                'Store',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ), // <— Text
+            ),
           ),
         ],
       ),
@@ -475,7 +544,7 @@ class ApplicationState extends ChangeNotifier {
               chat_id: document.id,
               date: FieldValue.serverTimestamp().toString(),
               message: '',
-              chat_writer: '',
+              chat_writer: user!.uid,
               name: '',
             ),
           );
