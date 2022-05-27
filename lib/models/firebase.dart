@@ -17,7 +17,7 @@ class Post {
   final String created;
   final List<String> like;
   final bool mission;
-  final int index;
+  final String index;
 }
 
 class SmallGroups {

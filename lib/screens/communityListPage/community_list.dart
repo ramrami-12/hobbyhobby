@@ -67,6 +67,24 @@ class CommunityList extends StatelessWidget {
                   return GestureDetector(
                     onTap: () {
                       print(com_name);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          // builder: (context) => MyInfoMain(
+                          //   uid: uid as String,
+                          //   imgName: '',
+                          //   personality: '',
+                          //   name: '',
+                          //   sex: '',
+                          //   tmp: 0,
+                          // ),
+                          builder: (context) => CommunityDetailPage(),
+                        ),
+                        // MaterialPageRoute(
+                        //   builder: (context) => MyInfo(
+                        //     uid: uid as String,
+                        //   ),
+                        // ),
+                      );
                       Get.to(
                         CommunityDetailPage(),
                         arguments: [docData, docID, index],

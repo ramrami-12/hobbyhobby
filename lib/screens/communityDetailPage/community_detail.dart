@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
@@ -41,6 +42,7 @@ class JoinButton extends StatelessWidget {
   final comData;
   final String docID;
   final int idx;
+  final user = FirebaseAuth.instance.currentUser!;
 
   JoinButton(this.comData, this.docID, this.idx);
 
@@ -58,8 +60,9 @@ class JoinButton extends StatelessWidget {
                 .collection('Communities')
                 .doc(docID)
                 .set({
-              'members': FieldValue.arrayUnion([userID])
+              'members': FieldValue.arrayUnion([user.uid])
             }, SetOptions(merge: true));
+            print(user.uid);
 
             Get.to(
               PostListPage(),

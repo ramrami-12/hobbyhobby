@@ -25,7 +25,7 @@ class PostListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final comData = Get.arguments[0];
     final docID = Get.arguments[1];
-    final int docIdx = Get.arguments[2];
+    final docIdx = Get.arguments[2];
 
     print(docIdx);
 
@@ -44,6 +44,7 @@ class PostListPage extends StatelessWidget {
 class PostListSection extends StatelessWidget {
   final String docID;
   final int docIdx;
+  late int like = 0;
 
   PostListSection(this.docID, this.docIdx);
 
@@ -126,8 +127,13 @@ class PostListSection extends StatelessWidget {
                           Row(
                             children: [
                               Container(
-                                child: Text("따봉 갯수"),
-                              ),
+                                  child: IconButton(
+                                color: like % 2 == 0
+                                    ? Colors.black
+                                    : Colors.yellow,
+                                icon: Icon(Icons.thumb_up_alt_rounded),
+                                onPressed: () async {},
+                              )),
                               SizedBox(width: 170),
                               Container(
                                 child: TextButton.icon(
@@ -173,6 +179,7 @@ class PostListSection extends StatelessWidget {
 class TitleSection extends StatelessWidget {
   final int docIdx;
   final String docID;
+  final user = FirebaseAuth.instance.currentUser!;
   TitleSection(this.docIdx, this.docID);
 
   @override
@@ -217,7 +224,7 @@ class TitleSection extends StatelessWidget {
                               builder: (context) => PostAddPage(
                                 addPost: (pic, content, mission) =>
                                     ProductList.addPostToCommunity(
-                                        pic, content, mission, docID),
+                                        pic, content, mission, docID, user.uid),
                                 post: ProductList._letter,
                               ),
                             ));
@@ -238,9 +245,9 @@ class TitleSection extends StatelessWidget {
 }
 
 class ProductList extends ChangeNotifier {
-  static String? docIdx;
+  final int docIdx;
 
-  ProductList() {
+  ProductList(this.docIdx) {
     init();
   }
 
@@ -266,7 +273,7 @@ class ProductList extends ChangeNotifier {
               mission: document.data()['mission'] as bool,
               doc_id: document.id,
               like: [""],
-              index: -1,
+              index: "0",
               created: FieldValue.serverTimestamp().toString(),
             ),
           );
@@ -311,7 +318,7 @@ class ProductList extends ChangeNotifier {
   // }
 
   static Future<DocumentReference> addPostToCommunity(
-      String pic, String content, bool mission, String docID) {
+      String pic, String content, bool mission, String docID, String uid) {
     return FirebaseFirestore.instance
         .collection('Communities')
         .doc(docID)
@@ -321,7 +328,7 @@ class ProductList extends ChangeNotifier {
       'title': "",
       'content': content,
       'mission': mission,
-      // 'userId': FirebaseAuth.instance.currentUser!.uid,
+      'userId': FirebaseAuth.instance.currentUser!.uid,
       'like': "",
       'index': -1,
       'created': FieldValue.serverTimestamp(),

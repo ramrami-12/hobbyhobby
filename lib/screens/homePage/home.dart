@@ -35,7 +35,25 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 onPressed: () {
-                  Get.to(CommunitylistPage());
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      // builder: (context) => MyInfoMain(
+                      //   uid: uid as String,
+                      //   imgName: '',
+                      //   personality: '',
+                      //   name: '',
+                      //   sex: '',
+                      //   tmp: 0,
+                      // ),
+                      builder: (context) => CommunitylistPage(),
+                    ),
+                    // MaterialPageRoute(
+                    //   builder: (context) => MyInfo(
+                    //     uid: uid as String,
+                    //   ),
+                    // ),
+                  );
+                  // Get.to(CommunitylistPage());
                 },
                 child: Text(
                   'Add My Community !',

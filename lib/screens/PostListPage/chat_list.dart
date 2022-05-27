@@ -108,6 +108,7 @@ class _GuestBookState extends State<GuestBook> {
   final _controller = TextEditingController();
   final String docID;
   final String postID;
+  final user = FirebaseAuth.instance.currentUser!;
   _GuestBookState(this.docID, this.postID);
   @override
   Widget build(BuildContext context) {
@@ -140,7 +141,7 @@ class _GuestBookState extends State<GuestBook> {
               MaterialButton(
                 onPressed: () {
                   ApplicationState.addChatToPost(
-                      _controller.text, docID, postID);
+                      _controller.text, docID, postID, user.uid);
 
                   _controller.clear();
                 },
@@ -521,7 +522,7 @@ class ApplicationState extends ChangeNotifier {
   // }
 
   static Future<DocumentReference> addChatToPost(
-      String message, String docID, String postID) {
+      String message, String docID, String postID, String uid) {
     return FirebaseFirestore.instance
         .collection('Communities')
         .doc(docID)
@@ -533,7 +534,7 @@ class ApplicationState extends ChangeNotifier {
       'chat_id': '',
       'date': FieldValue.serverTimestamp().toString(),
       'message': message,
-      'chat_writer': '',
+      'chat_writer': uid,
       'name': '',
     });
   }
