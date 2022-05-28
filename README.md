@@ -1,6 +1,6 @@
 # hobbyhobby
 
-An application that allows people to enjoy hobbies lightly within Handong University.
+An application that allows people to enjoy hobbies lightly within Handong Global University.
 
 <img src="/assets/images/hobby.png" width="200" height="200"/>
                                                    
