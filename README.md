@@ -1,7 +1,7 @@
 # hobbyhobby
 
 A new Flutter project.
-![logo](/assets/images/hobby.png)
+<img src = "/assets/images/hobby.png" width=40%" height="40%">
 
 ## Getting Started
 
