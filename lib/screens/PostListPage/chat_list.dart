@@ -21,13 +21,24 @@ import '../PostAddPage/post_add.dart';
 import 'package:path/path.dart';
 import 'package:hobbyhobby/main.dart';
 
-class ChatListPage extends StatelessWidget {
+class ChatListPage extends StatefulWidget {
+  @override
+  State<ChatListPage> createState() => _ChatListPageState();
+}
+
+class _ChatListPageState extends State<ChatListPage> {
   @override
   Widget build(BuildContext context) {
     final docID = Get.arguments[0];
     final docIdx = Get.arguments[1];
     final postID = Get.arguments[2];
     print(docIdx);
+    int _selectedIndex = 0;
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -68,7 +79,7 @@ class ChatListPage extends StatelessWidget {
                       // decoration: BoxDecoration(
                       //     borderRadius: BorderRadius.all(Radius.circular(20.0))),
                     ),
-                  )
+                  ),
 
                   // Consumer<ApplicationState>(
                   //   builder: (context, appState, _) => Column(
@@ -85,6 +96,8 @@ class ChatListPage extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: 12),
+            BottomBar(),
           ],
         ),
       ),
@@ -618,4 +631,67 @@ class ApplicationState extends ChangeNotifier {
   //     'userId': FirebaseAuth.instance.currentUser!.uid,
   //   });
   // }
+}
+
+class BottomBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 80,
+      // padding: EdgeInsets.only(top: 10),
+      child: Row(
+        children: [
+          Container(
+              color: Color(0xffFFCDCD),
+              width: 82.5,
+              height: 80,
+              // height: 100,
+              child: IconButton(
+                icon: Icon(Icons.description),
+                onPressed: () {},
+              )),
+          Container(
+              color: Color(0xffD7E9FF),
+              width: 82.5,
+              height: 80,
+              // height: 100,
+              child: IconButton(
+                icon: Icon(Icons.groups),
+                onPressed: () {},
+              )),
+          Container(
+              color: Color(0xffD7E9FF),
+              width: 82.5,
+              height: 80,
+              // height: 100,
+              child: IconButton(
+                icon: Icon(Icons.home),
+                onPressed: () {
+                  Get.toNamed('home');
+                  print("Pressed");
+                },
+              )),
+          Container(
+              color: Color(0xffD7E9FF),
+              width: 82.5,
+              height: 80,
+              // height: 100,
+              child: IconButton(
+                icon: Icon(Icons.history_outlined),
+                onPressed: () {},
+              )),
+          Container(
+              color: Color(0xffD7E9FF),
+              width: 83,
+              height: 80,
+              // height: 100,
+              child: IconButton(
+                icon: Icon(Icons.tune_rounded),
+                onPressed: () {},
+              ))
+          // tune_rounded
+        ],
+      ),
+    );
+  }
 }

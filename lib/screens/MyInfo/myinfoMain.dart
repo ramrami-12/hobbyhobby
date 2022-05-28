@@ -99,7 +99,7 @@ class _MyInfoMain extends State<MyInfoMain> {
               sex = data['sex'];
               personality = data['personality'];
               // tmp = items[4];
-              imgName = data['profile_image_id'];
+              imgName = data['profile_image_id'].toString();
               print(uid + sex + name);
 
               // users.doc(widget.uid).get().then((value) {
@@ -189,7 +189,7 @@ class _MyInfoMain extends State<MyInfoMain> {
           radius: 80,
           // ignore: unnecessary_null_comparison
           backgroundImage: AssetImage(
-            imgName == null ? 'images/app_logo.png' : imgName,
+            imgName == null ? 'assets/images/app_logo.png' : imgName,
           ),
           // imgName == null? "images/app_logo.png" : AssetImage(imgName),
 
@@ -375,9 +375,13 @@ class _MyInfoMain extends State<MyInfoMain> {
 
   takePhoto(ImageSource source) async {
     final pickedFile = await _picker.getImage(source: source);
-    setState(() {
-      _imageFile = pickedFile!;
-    });
+    print("pppp = ");
+    if (pickedFile != null) {
+      setState(() {
+        print("iiiiiii = " + imgName);
+        imgName = _imageFile as String;
+      });
+    } else {}
   }
 }
 
@@ -444,14 +448,7 @@ class _MyInfoEdit extends State<MyInfoEdit> {
                   child: RaisedButton(
                       child: Text('완료', style: TextStyle(fontSize: 21)),
                       onPressed: () {
-                        name = '${textFieldController.text}';
-                        updateUser()
-                            .whenComplete(() => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        HomePage(title: 'Homepage'),
-                                  ),
-                                ));
+                        Get.toNamed('/home');
                       }),
                   padding: EdgeInsets.only(left: 100, right: 100),
                 ),
@@ -710,9 +707,9 @@ class _MyInfoEdit extends State<MyInfoEdit> {
   }
 
   takePhoto(ImageSource source) async {
-    final pickedFile = await _picker.getImage(source: source);
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
-      _imageFile = pickedFile!;
+      _imageFile = pickedFile! as PickedFile;
     });
   }
 }

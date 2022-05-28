@@ -1,3 +1,23 @@
+class Preference {
+  Preference({
+    this.isActivity,
+    this.isGroupQuiet,
+    this.isSameSex,
+    this.maxCost,
+    this.maxMeet,
+    this.preferTime,
+    this.purpose,
+  });
+
+  dynamic isActivity;
+  dynamic isGroupQuiet;
+  dynamic isSameSex;
+  dynamic maxCost;
+  dynamic maxMeet;
+  dynamic preferTime;
+  dynamic purpose;
+}
+
 class Post {
   static var post;
 
@@ -21,32 +41,31 @@ class Post {
 }
 
 class SmallGroups {
-  SmallGroups(
-      {required this.Mission,
-      required this.group_id,
-      required this.group_members,
-      required this.chat});
-  final String group_id;
-  final List<Users> group_members;
-  final List<String> Mission;
-  final Chats chat;
+  SmallGroups({this.Mission, this.group_id, this.group_members, this.chat});
+
+  dynamic group_id;
+  dynamic group_members;
+  dynamic Mission;
+  dynamic chat;
 }
 
 class Communities {
   Communities({
     this.com_detail,
-    required this.com_id,
-    required this.com_name,
-    required this.hash_tag,
-    required this.members,
-    required String title,
-    required String content,
+    this.com_id,
+    this.com_name,
+    this.hash_tag,
+    this.members,
+    this.title,
+    this.content,
   });
   dynamic com_detail;
-  final String com_id;
-  final String com_name;
-  final List<String> hash_tag;
-  final List<Users> members;
+  dynamic com_id;
+  dynamic com_name;
+  dynamic hash_tag;
+  dynamic members;
+  dynamic title;
+  dynamic content;
 }
 
 class Chats {

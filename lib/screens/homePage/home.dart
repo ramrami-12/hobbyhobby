@@ -48,9 +48,9 @@ class _HomePageState extends State<HomePage> {
       });
     });
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.title),
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
