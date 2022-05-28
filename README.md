@@ -1,6 +1,7 @@
 # hobbyhobby
 
-A new Flutter project...
+A new Flutter project.
+![logo](/assets/images/hobby.png)
 
 ## Getting Started
 
