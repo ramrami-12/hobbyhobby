@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hobbyhobby/components/top_bar.dart';
 import 'package:hobbyhobby/components/chat_box.dart';
-import 'package:hobbyhobby/models/preference.dart';
+import 'package:hobbyhobby/models/structure.dart';
 import 'package:hobbyhobby/screens/communityDetailPage/community_detail.dart';
 import 'package:hobbyhobby/components/bottom_bar.dart';
+import '../../models/structure.dart';
 
 class GroupPage extends StatefulWidget {
   const GroupPage({Key? key, required this.userId}) : super(key: key);

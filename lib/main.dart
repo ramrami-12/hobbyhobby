@@ -29,9 +29,7 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(
           name: '/home',
-          page: () => HomePage(
-            title: '',
-          ),
+          page: () => HomePage(),
         ),
         GetPage(name: '/group', page: () => GroupPage(userId: user!.uid)),
         // GetPage(

@@ -21,6 +21,8 @@ import '../PostAddPage/post_add.dart';
 import 'package:path/path.dart';
 import 'package:hobbyhobby/main.dart';
 
+import '../../models/structure.dart';
+
 class ChatListPage extends StatefulWidget {
   @override
   State<ChatListPage> createState() => _ChatListPageState();

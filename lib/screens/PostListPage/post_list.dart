@@ -23,6 +23,8 @@ import 'package:hobbyhobby/screens/PostListPage/chat_list.dart';
 
 import '../groupPage/group.dart';
 
+import '../../models/structure.dart';
+
 class PostListPage extends StatefulWidget {
   @override
   State<PostListPage> createState() => _PostListPageState();

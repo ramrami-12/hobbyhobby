@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 // written by haram
 import 'package:flutter/material.dart';
-import 'package:hobbyhobby/models/preference.dart';
+import 'package:hobbyhobby/models/structure.dart';
 import 'package:group_button/group_button.dart';
 
 class MyButton extends StatefulWidget {
@@ -38,7 +38,6 @@ class _MyButtonState extends State<MyButton> {
               onSelected: widget.isSelected,
               buttons: [widget.items[0], widget.items[1]],
               options: GroupButtonOptions(
-
                 spacing: 1,
                 groupingType: GroupingType.wrap,
                 selectedShadow: const [],

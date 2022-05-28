@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 
 import 'package:image_picker/image_picker.dart';
 
-import '../../models/firebase.dart';
+import '../../models/structure.dart';
 
 class MyInfo extends StatefulWidget {
   const MyInfo({required this.uid});

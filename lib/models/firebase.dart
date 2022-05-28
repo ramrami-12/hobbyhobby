@@ -1,101 +1,50 @@
-class Post {
-  static var post;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hobbyhobby/models/structure.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:hobbyhobby/models/preference.dart';
+// written by haram
 
-  Post(
-      {required this.pic,
-      required this.title,
-      required this.doc_id,
-      required this.content,
-      required this.mission,
-      required this.like,
-      required this.index,
-      required this.created});
-  final String pic;
-  final String title;
-  final String doc_id;
-  final String content;
-  final String created;
-  final List<String> like;
-  final bool mission;
-  final String index;
-}
+Future<void> _getUserInfo() async {
+  final user = FirebaseAuth.instance.currentUser!;
+  String name = "";
+  String imgName = "";
+  String sex = "";
+  String personality = "";
+      await StreamSubscription<QuerySnapshot<Map<String, dynamic>>> collectionStream =
+          FirebaseFirestore.instance
+              //
+              .collection('Users')
+              .snapshots()
+              .listen((data) {
+        // print(data.docs);
+        data.docs.forEach((element) {
+          // print(element['com_name']);
+          if (user.uid == element.data()['user_id']) {
+            print(data.docs[0]['user_name'].toString());
+            //uid: user.uid, imgName: '', name: '', personality: '', sex: '', tmp: 0,
+            String name = data.docs[0]['user_name'].toString();
+            String imgName = data.docs[0]['profile_image_id'].toString();
+            String sex = data.docs[0]['sex'].toString();
+            String personality = data.docs[0]['personality'].toString();
+          }
+        });
+      });
+    }
 
-class SmallGroups {
-  SmallGroups(
-      {required this.Mission,
-      required this.group_id,
-      required this.group_members,
-      required this.chat});
-  final String group_id;
-  final List<Users> group_members;
-  final List<String> Mission;
-  final Chats chat;
-}
-
-class Communities {
-  Communities({
-    this.com_detail,
-    required this.com_id,
-    required this.com_name,
-    required this.hash_tag,
-    required this.members,
-    required String title,
-    required String content,
-  });
-  dynamic com_detail;
-  final String com_id;
-  final String com_name;
-  final List<String> hash_tag;
-  final List<Users> members;
-}
-
-class Chats {
-  Chats(
-      {required this.chat_content,
-      required this.chat_id,
-      required this.chat_writer,
-      required this.date,
-      required String name,
-      required String message});
-
-  final String chat_content;
-  final String date;
-  final String chat_id;
-  final String chat_writer;
-}
-
-class Users {
-  Users(
-      {required this.email,
-      required this.points,
-      required this.prefer,
-      required this.profile_image_id,
-      required this.sex,
-      required this.user_id,
-      required this.user_name});
-  final String email;
-  final String points;
-  final String profile_image_id;
-  final bool sex;
-  final String user_id;
-  final String user_name;
-  final Preferences prefer;
-}
-
-class Preferences {
-  Preferences(
-      {required this.is_activity,
-      required this.is_group_quiet,
-      required this.is_same_sex,
-      required this.max_cost,
-      required this.max_meet,
-      required this.prefer_time,
-      required this.purpose});
-  final bool is_activity;
-  final bool is_group_quiet;
-  final bool is_same_sex;
-  final int max_cost;
-  final int max_meet;
-  final List<String> prefer_time;
-  final List<String> purpose;
+Future<void> updatePreferences(Preferences pre, String userId) async {
+  DocumentReference prefers = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(userId)
+      .collection('Preferences')
+      .doc(userId);
+  print(userId);
+  return await prefers.update({
+    "is_activity": pre.isActivity,
+    "is_group_quiet": pre.isGroupQuiet,
+    "is_same_sex": pre.isSameSex,
+    // "max_cost": pre.maxCost,
+    // "max_meet": pre.maxMeet,
+    "prefer_time": pre.preferTime,
+    "purpose": pre.purpose
+  }).then((value) => print("preference info update!"));
 }

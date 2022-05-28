@@ -1,7 +1,6 @@
 // written by haram
 import 'package:flutter/material.dart';
-import 'package:hobbyhobby/models/firebase.dart';
-import 'package:hobbyhobby/models/preference.dart';
+import 'package:hobbyhobby/models/structure.dart';
 
 class SaveButton extends StatefulWidget {
   const SaveButton({Key? key, this.pre, this.userId}) : super(key: key);
@@ -12,7 +11,7 @@ class SaveButton extends StatefulWidget {
 }
 
 class _SaveButtonState extends State<SaveButton> {
-  Preference pre = Preference();
+  Preferences pre = Preferences();
 
   @override
   Widget build(BuildContext context) {

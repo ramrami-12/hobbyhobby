@@ -1,24 +1,3 @@
-// TODO Implement this library.
-class Preference {
-  Preference({
-    this.isActivity,
-    this.isGroupQuiet,
-    this.isSameSex,
-    this.maxCost,
-    this.maxMeet,
-    this.preferTime,
-    this.purpose,
-  });
-
-  dynamic isActivity;
-  dynamic isGroupQuiet;
-  dynamic isSameSex;
-  dynamic maxCost;
-  dynamic maxMeet;
-  dynamic preferTime;
-  dynamic purpose;
-}
-
 class Post {
   static var post;
 
@@ -41,15 +20,6 @@ class Post {
   final String index;
 }
 
-class SmallGroups {
-  SmallGroups({this.Mission, this.group_id, this.group_members, this.chat});
-
-  dynamic group_id;
-  dynamic group_members;
-  dynamic Mission;
-  dynamic chat;
-}
-
 class Communities {
   Communities({
     this.com_detail,
@@ -67,6 +37,15 @@ class Communities {
   dynamic members;
   dynamic title;
   dynamic content;
+}
+
+class SmallGroups {
+  SmallGroups({this.Mission, this.group_id, this.group_members, this.chat});
+
+  dynamic group_id;
+  dynamic group_members;
+  dynamic Mission;
+  dynamic chat;
 }
 
 class Chats {
@@ -103,19 +82,21 @@ class Users {
 }
 
 class Preferences {
-  Preferences(
-      {required this.is_activity,
-      required this.is_group_quiet,
-      required this.is_same_sex,
-      required this.max_cost,
-      required this.max_meet,
-      required this.prefer_time,
-      required this.purpose});
-  final bool is_activity;
-  final bool is_group_quiet;
-  final bool is_same_sex;
-  final int max_cost;
-  final int max_meet;
-  final List<String> prefer_time;
-  final List<String> purpose;
+  Preferences({
+    this.isActivity,
+    this.isGroupQuiet,
+    this.isSameSex,
+    this.maxCost,
+    this.maxMeet,
+    this.preferTime,
+    this.purpose,
+  });
+
+  dynamic isActivity;
+  dynamic isGroupQuiet;
+  dynamic isSameSex;
+  dynamic maxCost;
+  dynamic maxMeet;
+  dynamic preferTime;
+  dynamic purpose;
 }

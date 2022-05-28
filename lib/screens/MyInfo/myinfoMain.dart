@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 
 import 'package:image_picker/image_picker.dart';
 
-import '../../models/firebase.dart';
+import '../../models/structure.dart';
 
 class MyInfoMain extends StatefulWidget {
   MyInfoMain(

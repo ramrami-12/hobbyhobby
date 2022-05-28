@@ -3,23 +3,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:hobbyhobby/models/firebase.dart';
-import 'package:hobbyhobby/models/preference.dart';
+import 'package:hobbyhobby/models/structure.dart';
 import 'package:hobbyhobby/screens/MyPreferencePage/local_widget/my_button.dart';
-
 import 'package:hobbyhobby/screens/MyPreferencePage/local_widget/my_dropdown_button.dart';
 import 'package:hobbyhobby/screens/MyPreferencePage/local_widget/save_button.dart';
 import 'local_widget/my_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyPreferPage extends StatefulWidget {
-  const MyPreferPage({Key? key, this.userId}) : super(key: key);
+  const MyPreferPage({Key? key, this.userId, required String title})
+      : super(key: key);
   final userId;
   @override
   State<MyPreferPage> createState() => _MyPreferPageState();
 }
 
 class _MyPreferPageState extends State<MyPreferPage> {
-  Preference pre = Preference();
+  Preferences pre = Preferences();
   int _selectedIndex = 0;
 
   @override
@@ -47,7 +47,7 @@ class _MyPreferPageState extends State<MyPreferPage> {
           .collection('Preferences')
           .doc(widget.userId);
 
-      // updatePreferences(pre, widget.userId);
+      updatePreferences(pre, widget.userId);
 
       return Scaffold(
           bottomNavigationBar: BottomNavigationBar(

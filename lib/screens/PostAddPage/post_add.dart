@@ -13,12 +13,14 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:hobbyhobby/models/firebase.dart';
+// import 'package:hobbyhobby/models/firebase.dart';
 import 'package:path/path.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hobbyhobby/screens/PostListPage/post_list.dart';
+
+import '../../models/structure.dart';
 
 class PostAddPage extends StatefulWidget {
   const PostAddPage({required this.addPost, required this.post});
