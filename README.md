@@ -26,6 +26,6 @@ This project is a starting point for a HobbyHobby application.
 
 ## Used Tool
 
-<a href="링크"><img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white"/></a>
+<a href="링크"><img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=notion&logoColor=black"/></a>
 
 
