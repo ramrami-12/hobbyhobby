@@ -13,11 +13,12 @@ This project is a starting point for a HobbyHobby application.
    - Install Flutter and VSCode(or Android Studio)
    - Install Xcode
 
-2. UnZip Flutter file in workspace directory
-3. Open the Flutter file on VSCode(or Android Studio)
-4. Add Firebase to Flutter file
+2. UnZip Flutter file in workspace directory: <br/>
+    git clone [link]<br/>
+4. Open the Flutter file on VSCode(or Android Studio)
+5. Add Firebase to Flutter file
    - https://firebase.google.com/docs/flutter/setup?hl=ko&platform=ios
-5. Open the Terminal
+6. Open the Terminal
    - Enter the command in terminal: <br/>
         flutter pub get <br/>
         flutter run
