@@ -1,8 +1,9 @@
 # hobbyhobby
 
 A new Flutter project.
-<img src = "/assets/images/hobby.png" width=40%" height="40%">
-
+![title](/assets/images/hobby.png){: width="100" height="100"}
+                                                   
+                                                   
 ## Getting Started
 
 This project is a starting point for a Flutter application.
