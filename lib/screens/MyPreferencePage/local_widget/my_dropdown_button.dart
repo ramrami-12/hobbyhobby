@@ -1,17 +1,18 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:hobbyhobby/models/firebase.dart';
 
 class MyDropDownButton extends StatefulWidget {
   final String title;
-  final String selectValue;
+  dynamic selectValue;
   final List<String>selectList;
 
-  const MyDropDownButton(
+  MyDropDownButton(
       {Key? key,
       required this.title,
       required this.selectValue,
-      required this.selectList})
+      required this.selectList, required Null Function(dynamic newValue) onChanged})
       : super(key: key);
 
   @override
@@ -23,11 +24,12 @@ class _MyDropDownButtonState extends State<MyDropDownButton> {
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
       SizedBox(
-        width: 20,
+        width: 70,
       ),
       Text(
         widget.title,
         style: TextStyle(
+          fontWeight: FontWeight.bold,
           fontFamily: 'NanumSquareRoundR',
           fontSize: 20,
         ),
@@ -41,9 +43,9 @@ class _MyDropDownButtonState extends State<MyDropDownButton> {
         items: widget.selectList.map((value) {
           return DropdownMenuItem(value: value, child: Text(value));
         }).toList(),
-        onChanged: (item) {
+        onChanged: (value) {
           setState(() {
-            // this.widget.selectValue = 'item';
+            widget.selectValue = value;
           });
         },
       ),

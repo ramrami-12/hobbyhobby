@@ -25,11 +25,13 @@ class _CommunitylistPageState extends State<CommunitylistPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // body: Column(children: [TopBar(), CommunityList()]),
-      body: Column(children: [
-        TopBar(),
-        SizedBox(height: 20),
-        Expanded(child: CommunityList())
-      ]),
+      body: SafeArea(
+        child: Column(children: [
+          TopBar(),
+          SizedBox(height: 20),
+          Expanded(child: CommunityList())
+        ]),
+      ),
     );
   }
 }
