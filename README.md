@@ -2,7 +2,7 @@
 
 A new Flutter project.
 
-<img src="/assets/images/hobby.png" width="200" height="400"/>
+<img src="/assets/images/hobby.png" width="200" height="200"/>
                                                    
                                                    
 ## Getting Started
