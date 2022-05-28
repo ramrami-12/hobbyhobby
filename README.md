@@ -1,19 +1,29 @@
 # hobbyhobby
 
-A new Flutter project.
+An application that allows people to enjoy hobbies lightly within Handong University.
 
 <img src="/assets/images/hobby.png" width="200" height="200"/>
                                                    
                                                    
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a HobbyHobby application.
 
-A few resources to get you started if this is your first Flutter project:
+1. Install related Software and Tool.
+   - Install Flutter and VSCode(or Android Studio)
+   - Install Xcode
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+2. UnZip Flutter file in workspace directory
+3. Open the Flutter file on VSCode(or Android Studio)
+4. Add Firebase to Flutter file
+   - https://firebase.google.com/docs/flutter/setup?hl=ko&platform=ios
+5. Open the Terminal
+   - Enter the command in terminal: 
+        flutter pub get
+        flutter run
+6. If it runs succesfully, you can see the same screen as the picture on the right.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
+
