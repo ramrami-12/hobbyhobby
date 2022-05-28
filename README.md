@@ -1,7 +1,8 @@
 # hobbyhobby
 
 A new Flutter project.
-![title](/assets/images/hobby.png){: width="100" height="100"}
+
+<img src="/assets/images/hobby.png" width="200" height="400"/>
                                                    
                                                    
 ## Getting Started
