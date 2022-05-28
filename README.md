@@ -18,7 +18,7 @@ This project is a starting point for a HobbyHobby application.
 4. Add Firebase to Flutter file
    - https://firebase.google.com/docs/flutter/setup?hl=ko&platform=ios
 5. Open the Terminal
-   - Enter the command in terminal: 
+   - Enter the command in terminal: <br/>
         flutter pub get <br/>
         flutter run
 6. If it runs succesfully, you can see the same screen as the picture on the right.
