@@ -27,5 +27,7 @@ This project is a starting point for a HobbyHobby application.
 ## Used Tool
 
 <a href="링크"><img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=notion&logoColor=white"/></a>
+<a href="링크"><img src="https://img.shields.io/badge/Notion-181717?style=flat-square&logo=github&logoColor=white"/></a>
+
 
 
