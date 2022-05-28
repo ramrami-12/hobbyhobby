@@ -14,7 +14,7 @@ This project is a starting point for a HobbyHobby application.
    - Install Xcode
 
 2. UnZip Flutter file in workspace directory: <br/>
-    git clone [link]<br/>
+    git clone _link_
 4. Open the Flutter file on VSCode(or Android Studio)
 5. Add Firebase to Flutter file
    - https://firebase.google.com/docs/flutter/setup?hl=ko&platform=ios
