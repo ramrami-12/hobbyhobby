@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "920158121219",
+    "firebase_url": "https://hobbyhobby-67c40-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "hobbyhobby-67c40",
+    "storage_bucket": "hobbyhobby-67c40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920158121219:android:5f922fc5a9364f75ec8d36",
+        "android_client_info": {
+          "package_name": "com.example.hobbyhobby"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "920158121219-fu9p3dk0bailom4i1mkj7rhq18mraso7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZwFtvz6nyRPcVw9-0h8QkM8bT987HdtY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "920158121219-fu9p3dk0bailom4i1mkj7rhq18mraso7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "920158121219-qckaen7vounh0utdn08l0rataiil7d40.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hobbyhobby"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
