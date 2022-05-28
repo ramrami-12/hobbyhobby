@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hobbyhobby/models/firebase.dart';
 import 'package:hobbyhobby/models/structure.dart';
-import 'package:hobbyhobby d/screens/MyPreferencePage/local_widget/my_button.dart';
+import 'package:hobbyhobby/screens/MyPreferencePage/local_widget/my_button.dart';
 import 'package:hobbyhobby/screens/MyPreferencePage/local_widget/my_dropdown_button.dart';
 import 'package:hobbyhobby/screens/MyPreferencePage/local_widget/save_button.dart';
 import 'package:hobbyhobby/components/bottom_bar.dart';
