@@ -80,8 +80,7 @@ class _MyInfo extends State<MyInfo> {
                       updateData()
                           .whenComplete(() => Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      HomePage(title: 'Homepage'),
+                                  builder: (context) => HomePage(),
                                 ),
                               ));
                     }),
@@ -100,7 +99,7 @@ class _MyInfo extends State<MyInfo> {
         CircleAvatar(
           radius: 80,
           // ignore: unnecessary_null_comparison
-          backgroundImage: AssetImage('images/app_logo.png'),
+          backgroundImage: AssetImage('assets/images/app_logo.png'),
 
           // backgroundImage: _imageFile == null? AssetImage('images/app_logo.png'):FileImage(File(_imageFile.path)),
         ),

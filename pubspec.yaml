@@ -67,7 +67,7 @@ flutter:
   assets:
     - assets/images/hobby.png
     - assets/images/google_logo.png
-
+    - assets/images/app_logo.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

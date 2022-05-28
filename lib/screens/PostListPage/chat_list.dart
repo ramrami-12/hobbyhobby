@@ -311,7 +311,7 @@ class ChatListSection extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      '예은',
+                                      '지현',
                                       style: TextStyle(
                                           fontFamily: "Nunito",
                                           fontSize: 13,

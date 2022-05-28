@@ -43,44 +43,7 @@ class _PostListPageState extends State<PostListPage> {
       });
     }
 
-    print(docIdx);
-
     return Scaffold(
-      // bottomNavigationBar: BottomNavigationBar(
-      //   backgroundColor: Color(0xffD7E9FF),
-      //   fixedColor: Colors.black,
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.description, color: Colors.black),
-      //       label: 'Posts',
-      //       backgroundColor: Color(0xffD7E9FF),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.groups, color: Colors.black),
-      //       label: 'Groups',
-      //       backgroundColor: Color(0xffD7E9FF),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home, color: Colors.black),
-      //       label: 'Home',
-      //       backgroundColor: Color(0xffD7E9FF),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.history, color: Colors.black),
-      //       label: 'History',
-      //       backgroundColor: Color(0xffD7E9FF),
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.tune, color: Colors.black),
-      //       label: 'Preference',
-      //       backgroundColor: Color(0xffD7E9FF),
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-
-      //   // selectedItemColor: Color(0xffFDCDCD),
-      //   onTap: _onItemTapped,
-      // ),
       body: SafeArea(
         child: Column(
           children: [
@@ -100,8 +63,6 @@ class PostListSection extends StatelessWidget {
   final docIdx;
   late var like;
 
-  // CollectionReference user = FirebaseFirestore.instance.collection('Users');
-
   PostListSection(this.docID, this.docIdx);
 
   @override
@@ -120,32 +81,7 @@ class PostListSection extends StatelessWidget {
         return ListView.builder(
             itemCount: snapshot.data.docs.length,
             itemBuilder: (ctx, index) {
-              // varwriter = collectionStream.docs()
-              // DocumentSnapshot writer = await user
-              //     .doc(snapshot.rdata.docs[index].data()['userId'].toString())
-              //     .get()
-              //     ;
-              // var w = writer.;
-              // print(w);
-              // StreamSubscription<QuerySnapshot<Map<String, dynamic>>>
-              //     collectionStream = FirebaseFirestore.instance
-              //         .collection('Users')
-              //         .snapshots()
-              //         .listen((data) {
-              //           String writer = data.docs(snapshot.data.docs[index].data()['user_name'].toString()).
-              //   // print(data.docs);
-              //   data.docs.forEach((element) {
-
-              //     print(element);
-              //   });
-              // });
               Future<bool> onLikeButtonTapped(bool isLiked) async {
-                /// send your request here
-                // final bool success= await sendRequest();
-
-                /// if failed, you can do nothing
-                // return success? !isLiked:isLiked;
-
                 return !isLiked;
               }
 
@@ -369,12 +305,6 @@ class ProductList extends ChangeNotifier {
         }
         notifyListeners();
       });
-      //   } else {
-      //     _letter = [];
-      //     _guestBookSubscription?.cancel(); // new
-      //   }
-      //   notifyListeners();
-      //
     });
   }
 
@@ -386,25 +316,6 @@ class ProductList extends ChangeNotifier {
   static List<Post> get letter => _letter;
   static String _docid = "";
   static String get docid => _docid;
-  // final String pic;
-  // final String title;
-  // final String doc_id;
-  // final String content;
-  // final List<String> like;
-  // final int index;
-
-  // static Future<DocumentReference> addCommunity(String title, String content) {
-  //   return FirebaseFirestore.instance
-  //       .collection('Community')
-  //       .add(<String, dynamic>{
-  //     'title': title,
-  //     'content': content,
-  //     'userId': FirebaseAuth.instance.currentUser!.uid,
-  //     'like': "",
-  //     'index': -1,
-  //     'created': FieldValue.serverTimestamp(),
-  //   });
-  // }
 
   static Future<DocumentReference> addPostToCommunity(
       String pic, String content, bool mission, String docID, String uid) {
@@ -643,7 +554,7 @@ class BottomBar extends StatelessWidget {
               child: IconButton(
                 icon: Icon(Icons.tune_rounded),
                 onPressed: () {
-                  Get.toNamed('/prefer');
+                  Get.toNamed('preference');
                 },
               ))
           // tune_rounded

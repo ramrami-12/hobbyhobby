@@ -33,14 +33,6 @@ class _GroupPageState extends State<GroupPage> {
         direction: Axis.vertical,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //   children: <Widget>[
-          //     Text('Mission'),
-          //     Text('D-12'),
-          //     Text('27 Points'),
-          //   ],
-          // ),
           TopBars(),
           Text(
             '${com.com_name}',

@@ -65,20 +65,22 @@ class Chats {
 
 class Users {
   Users(
-      {required this.email,
-      required this.points,
-      required this.prefer,
-      required this.profile_image_id,
-      required this.sex,
-      required this.user_id,
-      required this.user_name});
-  final String email;
-  final String points;
-  final String profile_image_id;
-  final bool sex;
-  final String user_id;
-  final String user_name;
-  final Preferences prefer;
+      {this.email,
+      this.points,
+      this.prefers,
+      this.profile_image_id,
+      this.sex,
+      this.user_id,
+      this.user_name,
+      this.personality});
+  dynamic email;
+  dynamic points;
+  dynamic profile_image_id;
+  dynamic sex;
+  dynamic user_id;
+  dynamic user_name;
+  dynamic prefers;
+  dynamic personality;
 }
 
 class Preferences {

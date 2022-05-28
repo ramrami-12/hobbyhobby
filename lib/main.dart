@@ -32,18 +32,7 @@ class MyApp extends StatelessWidget {
           page: () => HomePage(),
         ),
         GetPage(name: '/group', page: () => GroupPage(userId: user!.uid)),
-        // GetPage(
-        //   name: '/two',
-        //   page: () => SecondPage(),
-        // ),
-        // GetPage(
-        //   name: '/three',
-        //   page: () => ThirdPage(),
-        // ),
-        // GetPage(
-        //   name: '/a/b/c1',
-        //   page: () => ABCOnePage(),
-        // ),
+        GetPage(name: '/preference', page: () => MyPreferPage()),
       ],
       title: 'Flutter Demo',
       theme: ThemeData(
